@@ -15,6 +15,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { MoonPayWidget } from '@/components/onramp/MoonPayWidget'
+import Image from 'next/image'
 
 const USDC_ADDRESS = process.env.NEXT_PUBLIC_TOKEN_ADDRESS as `0x${string}`
 const MOCK_TOKEN_ABI = MockTokenABI as Abi
@@ -47,8 +49,12 @@ export default function CustomConnectButton() {
     ? formatUnits(usdcBalance as bigint, 6) // USDC has 6 decimals
     : '0.00'
 
+  // Check if user has low USDC balance (less than $10 for staking)
+  const hasLowBalance = parseFloat(formattedUsdcBalance) < 10
+
   const [copied, setCopied] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [showMoonPay, setShowMoonPay] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Format large numbers with K, M, B, T suffixes
@@ -319,6 +325,28 @@ export default function CustomConnectButton() {
                 </Button>
               </div>
             )}
+            {/* Buy USDC Button for low balance */}
+            {isCorrectNetwork && hasLowBalance && (
+              <div className="mt-2">
+                <Button
+                  onClick={() => {
+                    setShowMoonPay(true)
+                    setIsOpen(false)
+                  }}
+                  size="sm"
+                  className="w-full text-base bg-blue-500 hover:bg-blue-600 text-white"
+                >
+                  <Image 
+                    src="/Assets/Logo/moonpay-icon.png" 
+                    alt="MoonPay" 
+                    width={16} 
+                    height={16}
+                    className="mr-1 rounded-sm"
+                  />
+                  Buy USDC
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Copy Address */}
@@ -355,6 +383,25 @@ export default function CustomConnectButton() {
           </button>
         </div>
       )}
+
+      {/* MoonPay Widget Dialog */}
+      <Dialog open={showMoonPay} onOpenChange={setShowMoonPay}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Buy USDC with MoonPay</DialogTitle>
+            <DialogDescription>
+              Purchase USDC directly with your credit card or bank transfer to start staking.
+            </DialogDescription>
+          </DialogHeader>
+          <MoonPayWidget
+            onClose={() => setShowMoonPay(false)}
+            onSuccess={() => {
+              setShowMoonPay(false)
+              // Optionally refresh balance or show success message
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
