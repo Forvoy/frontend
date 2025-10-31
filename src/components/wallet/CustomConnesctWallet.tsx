@@ -181,7 +181,7 @@ export default function CustomConnectButton() {
               <DialogDescription className="text-base pt-2">
                 <div className="space-y-3">
                   <p>This app only supports Flow EVM Testnet. Please switch your wallet network to Flow EVM Testnet to continue.</p>
-                  
+
                   <div className="bg-muted/30 p-3 rounded-lg text-sm">
                     <h4 className="font-medium mb-2">Network Details:</h4>
                     <ul className="space-y-1 text-muted-foreground">
@@ -192,9 +192,9 @@ export default function CustomConnectButton() {
                       <li>• <strong>Explorer:</strong> https://evm-testnet.flowscan.io</li>
                     </ul>
                   </div>
-                  
+
                   <p className="text-sm text-muted-foreground">
-                    Click "Switch to Flow EVM Testnet" below or add the network manually in your wallet.
+                    Click &quot;Switch to Flow EVM Testnet&quot; below or add the network manually in your wallet.
                   </p>
                 </div>
               </DialogDescription>
@@ -301,8 +301,8 @@ export default function CustomConnectButton() {
                 {isCorrectNetwork && usdcBalance !== undefined
                   ? `${formatBalance(formattedUsdcBalance)} USDC`
                   : isCorrectNetwork
-                  ? "Loading..."
-                  : "Wrong Network"}
+                    ? "Loading..."
+                    : "Wrong Network"}
               </span>
             </div>
             {!isCorrectNetwork && (
