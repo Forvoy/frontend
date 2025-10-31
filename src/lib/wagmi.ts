@@ -1,23 +1,42 @@
 import { createConfig } from '@privy-io/wagmi';
-import { http, fallback } from "viem";
-import { baseSepolia } from "viem/chains";
+import { http, defineChain } from "viem";
 
-// Multiple RPC endpoints for reliability
-const baseSepoliaRPCs = [
-  "https://sepolia.base.org",
-  "https://base-sepolia.blockpi.network/v1/rpc/public",
-  "https://base-sepolia-rpc.publicnode.com",
-];
+// Define Flow EVM Testnet chain
+export const flowTestnet = defineChain({
+  id: 545,
+  name: 'Flow EVM Testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Flow',
+    symbol: 'FLOW',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://testnet.evm.nodes.onflow.org'],
+    },
+    public: {
+      http: ['https://testnet.evm.nodes.onflow.org'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'FlowScan',
+      url: 'https://evm-testnet.flowscan.io'
+    },
+  },
+  testnet: true,
+});
+
+// RPC endpoint for Flow EVM Testnet
+const flowTestnetRPC = "https://testnet.evm.nodes.onflow.org";
 
 export const config = createConfig({
-  chains: [baseSepolia],
+  chains: [flowTestnet],
   transports: {
-    [baseSepolia.id]: fallback(
-      baseSepoliaRPCs.map((url) => http(url, {
-        timeout: 10_000, // 10 seconds
-        retryCount: 3,
-        retryDelay: 1000, // 1 second
-      }))
-    ),
+    [flowTestnet.id]: http(flowTestnetRPC, {
+      timeout: 10_000, // 10 seconds
+      retryCount: 3,
+      retryDelay: 1000, // 1 second
+    }),
   },
 });

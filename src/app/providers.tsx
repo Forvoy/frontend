@@ -59,55 +59,55 @@ export function Providers({ children }: { children: React.ReactNode }) {
                   createOnLogin: 'users-without-wallets',
                 },
               },
-              // Set Base Sepolia as the default chain
+              // Set Flow EVM Testnet as the default chain
               defaultChain: {
-                id: 84532, // Base Sepolia chain ID
-                name: 'Base Sepolia',
-                network: 'base-sepolia',
+                id: 545, // Flow EVM Testnet chain ID
+                name: 'Flow EVM Testnet',
+                network: 'flow-testnet',
                 nativeCurrency: {
                   decimals: 18,
-                  name: 'Ethereum',
-                  symbol: 'ETH',
+                  name: 'Flow',
+                  symbol: 'FLOW',
                 },
                 rpcUrls: {
                   default: {
-                    http: ['https://sepolia.base.org'],
+                    http: ['https://testnet.evm.nodes.onflow.org'],
                   },
                   public: {
-                    http: ['https://sepolia.base.org'],
+                    http: ['https://testnet.evm.nodes.onflow.org'],
                   },
                 },
                 blockExplorers: {
                   default: {
-                    name: 'BaseScan',
-                    url: 'https://sepolia.basescan.org',
+                    name: 'FlowScan',
+                    url: 'https://evm-testnet.flowscan.io',
                   },
                 },
                 testnet: true,
               },
-              // IMPORTANT: Only allow Base Sepolia - this prevents connection on other chains
+              // IMPORTANT: Only allow Flow EVM Testnet - this prevents connection on other chains
               supportedChains: [
                 {
-                  id: 84532, // Base Sepolia chain ID
-                  name: 'Base Sepolia',
-                  network: 'base-sepolia',
+                  id: 545, // Flow EVM Testnet chain ID
+                  name: 'Flow EVM Testnet',
+                  network: 'flow-testnet',
                   nativeCurrency: {
                     decimals: 18,
-                    name: 'Ethereum',
-                    symbol: 'ETH',
+                    name: 'Flow',
+                    symbol: 'FLOW',
                   },
                   rpcUrls: {
                     default: {
-                      http: ['https://sepolia.base.org'],
+                      http: ['https://testnet.evm.nodes.onflow.org'],
                     },
                     public: {
-                      http: ['https://sepolia.base.org'],
+                      http: ['https://testnet.evm.nodes.onflow.org'],
                     },
                   },
                   blockExplorers: {
                     default: {
-                      name: 'BaseScan',
-                      url: 'https://sepolia.basescan.org',
+                      name: 'FlowScan',
+                      url: 'https://evm-testnet.flowscan.io',
                     },
                   },
                   testnet: true,
