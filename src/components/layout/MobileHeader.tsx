@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { WalletConnect } from '@/lib/privy'
+import CustomConnectButton from '@/components/wallet/CustomConnesctWallet'
 import { useFarcaster } from '@/contexts/FarcasterProvider'
 import { ChainIndicator } from '@/components/wallet/ChainIndicator'
 
@@ -51,7 +51,7 @@ export default function MobileHeader() {
 
           {/* Chain Indicator & Wallet Connect */}
           <ChainIndicator />
-          <WalletConnect />
+          <CustomConnectButton />
         </div>
       </div>
     </header>

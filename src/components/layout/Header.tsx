@@ -3,13 +3,13 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from 'next/navigation'
-import { WalletConnect, useWallet } from '@/lib/privy'
-import { useFarcaster } from '@/contexts/FarcasterProvider'
+import { useAccount } from 'wagmi'
+import CustomConnectButton from '@/components/wallet/CustomConnesctWallet'
 import { ChainIndicator } from '@/components/wallet/ChainIndicator'
 
 export default function Header() {
   const pathname = usePathname()
-  const { address, isConnected } = useWallet()
+  const { address, isConnected } = useAccount()
 
   const isNewsActive = pathname?.startsWith('/news')
   const isAnalystsActive = pathname?.startsWith('/analysts')
@@ -68,30 +68,12 @@ export default function Header() {
               ))}
             </div>
 
-            {/* Farcaster User & Connect Wallet */}
+            {/* Chain Indicator & Connect Wallet */}
             <div className="flex items-center gap-3">
-              {/* Farcaster User Info - Only show in MiniApp */}
-              {/* {isReady && isInFarcaster && farcasterUser && (
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
-                  {farcasterUser.pfpUrl && (
-                    <Image
-                      src={farcasterUser.pfpUrl}
-                      alt={farcasterUser.username || 'User'}
-                      width={24}
-                      height={24}
-                      className="w-6 h-6 rounded-full"
-                    />
-                  )}
-                  <span className="text-sm font-medium text-foreground">
-                    @{farcasterUser.username || `FID:${farcasterUser.fid}`}
-                  </span>
-                </div>
-              )} */}
-
               <div className="hidden md:block">
                 <ChainIndicator />
               </div>
-              <WalletConnect />
+              <CustomConnectButton />
             </div>
           </div>
         </nav>
