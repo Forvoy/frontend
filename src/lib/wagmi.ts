@@ -32,7 +32,11 @@ export const config = getDefaultConfig({
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '8d8e0d5e5f5e5d5e5f5e5d5e5f5e5d5e',
   chains: [flowTestnet],
   transports: {
-    [flowTestnet.id]: http('https://testnet.evm.nodes.onflow.org'),
+    [flowTestnet.id]: http(
+      process.env.NEXT_PUBLIC_QUICKNODE_ENDPOINT || 
+      process.env.NEXT_PUBLIC_FLOW_TESTNET_RPC_URL || 
+      'https://testnet.evm.nodes.onflow.org'
+    ),
   },
   ssr: true,
 });
