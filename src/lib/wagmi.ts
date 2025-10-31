@@ -1,5 +1,5 @@
-import { createConfig } from '@privy-io/wagmi';
-import { http, defineChain } from "viem";
+import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { http, defineChain } from 'viem';
 
 // Define Flow EVM Testnet chain
 export const flowTestnet = defineChain({
@@ -27,16 +27,12 @@ export const flowTestnet = defineChain({
   testnet: true,
 });
 
-// RPC endpoint for Flow EVM Testnet
-const flowTestnetRPC = "https://testnet.evm.nodes.onflow.org";
-
-export const config = createConfig({
+export const config = getDefaultConfig({
+  appName: 'Forvoy',
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '8d8e0d5e5f5e5d5e5f5e5d5e5f5e5d5e',
   chains: [flowTestnet],
   transports: {
-    [flowTestnet.id]: http(flowTestnetRPC, {
-      timeout: 10_000, // 10 seconds
-      retryCount: 3,
-      retryDelay: 1000, // 1 second
-    }),
+    [flowTestnet.id]: http('https://testnet.evm.nodes.onflow.org'),
   },
+  ssr: true,
 });

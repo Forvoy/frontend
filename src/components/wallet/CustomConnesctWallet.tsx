@@ -3,7 +3,7 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit"
 import { useAccount, useDisconnect, useReadContract, useSwitchChain } from "wagmi"
 import { Button } from "@/components/ui/button"
-import { User, Copy, Check, LogOut, Wallet, AlertCircle } from "lucide-react"
+import { User, Copy, Check, LogOut, Wallet, AlertCircle, RefreshCw } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 import { formatUnits, type Abi } from 'viem'
 import MockTokenABI from '@/abis/MockToken.json'
@@ -29,6 +29,8 @@ export default function CustomConnectButton() {
   // Check if on correct network
   const isCorrectNetwork = chain?.id === FLOW_TESTNET_CHAIN_ID
   const [showNetworkWarning, setShowNetworkWarning] = useState(false)
+  const [isSwitching, setIsSwitching] = useState(false)
+  const [connectError, setConnectError] = useState<string | null>(null)
 
   // Read USDC balance
   const { data: usdcBalance } = useReadContract({
@@ -76,10 +78,25 @@ export default function CustomConnectButton() {
 
   const handleSwitchToFlow = async () => {
     try {
+      setIsSwitching(true)
+      setConnectError(null)
       await switchChain({ chainId: FLOW_TESTNET_CHAIN_ID })
       setShowNetworkWarning(false)
     } catch (error) {
       console.error('Failed to switch network:', error)
+      setConnectError('Failed to switch to Flow EVM Testnet. Please try manually in your wallet.')
+    } finally {
+      setIsSwitching(false)
+    }
+  }
+
+  const handleConnect = async () => {
+    try {
+      setConnectError(null)
+      openConnectModal?.()
+    } catch (error) {
+      console.error('Failed to connect wallet:', error)
+      setConnectError('Failed to connect wallet. Please try again.')
     }
   }
 
@@ -89,6 +106,29 @@ export default function CustomConnectButton() {
       setShowNetworkWarning(true)
     }
   }, [isConnected, isCorrectNetwork])
+
+  // Auto-switch network after connection
+  useEffect(() => {
+    const autoSwitchNetwork = async () => {
+      if (isConnected && !isCorrectNetwork && !isSwitching) {
+        try {
+          setIsSwitching(true)
+          setConnectError(null)
+          await switchChain({ chainId: FLOW_TESTNET_CHAIN_ID })
+          setShowNetworkWarning(false)
+        } catch (error) {
+          console.error('Auto-switch failed:', error)
+          // Don't show error immediately, let user see the warning dialog first
+        } finally {
+          setIsSwitching(false)
+        }
+      }
+    }
+
+    // Add a small delay to avoid immediate switch that might confuse users
+    const timer = setTimeout(autoSwitchNetwork, 1000)
+    return () => clearTimeout(timer)
+  }, [isConnected, isCorrectNetwork, switchChain, isSwitching])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -106,13 +146,21 @@ export default function CustomConnectButton() {
   // --- Not Connected ---
   if (!isConnected) {
     return (
-      <Button
-        onClick={openConnectModal}
-        className="bg-gradient-to-r from-primary/70 to-accent/70 text-white font-medium border border-border/40
-                   hover:from-primary hover:to-accent shadow-sm transition-colors"
-      >
-        Connect Wallet
-      </Button>
+      <div className="space-y-2">
+        <Button
+          onClick={handleConnect}
+          className="bg-linear-to-r from-primary/70 to-accent/70 text-white font-medium border border-border/40
+                     hover:from-primary hover:to-accent shadow-sm transition-colors"
+        >
+          Connect Wallet
+        </Button>
+        {connectError && (
+          <div className="flex items-center gap-2 text-red-400 text-sm">
+            <AlertCircle className="w-4 h-4" />
+            <span>{connectError}</span>
+          </div>
+        )}
+      </div>
     )
   }
 
@@ -131,40 +179,96 @@ export default function CustomConnectButton() {
                 <DialogTitle className="text-xl">Switch to Flow EVM Testnet</DialogTitle>
               </div>
               <DialogDescription className="text-base pt-2">
-                This app only supports Flow EVM Testnet. Please switch your wallet network to Flow EVM Testnet (Chain ID: 545) to continue.
+                <div className="space-y-3">
+                  <p>This app only supports Flow EVM Testnet. Please switch your wallet network to Flow EVM Testnet to continue.</p>
+                  
+                  <div className="bg-muted/30 p-3 rounded-lg text-sm">
+                    <h4 className="font-medium mb-2">Network Details:</h4>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>• <strong>Chain ID:</strong> 545</li>
+                      <li>• <strong>Network Name:</strong> Flow EVM Testnet</li>
+                      <li>• <strong>RPC URL:</strong> https://testnet.evm.nodes.onflow.org</li>
+                      <li>• <strong>Currency:</strong> FLOW</li>
+                      <li>• <strong>Explorer:</strong> https://evm-testnet.flowscan.io</li>
+                    </ul>
+                  </div>
+                  
+                  <p className="text-sm text-muted-foreground">
+                    Click "Switch to Flow EVM Testnet" below or add the network manually in your wallet.
+                  </p>
+                </div>
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="flex-col sm:flex-col gap-2 sm:gap-2">
               <Button
                 onClick={handleSwitchToFlow}
-                className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                disabled={isSwitching}
+                className="w-full bg-linear-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 disabled:opacity-50"
               >
-                Switch to Flow EVM Testnet
+                {isSwitching ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                    Switching...
+                  </>
+                ) : (
+                  'Switch to Flow EVM Testnet'
+                )}
               </Button>
               <Button
                 onClick={() => {
                   disconnect()
                   setShowNetworkWarning(false)
+                  setConnectError(null)
                 }}
                 variant="outline"
                 className="w-full"
+                disabled={isSwitching}
               >
                 Disconnect
               </Button>
+              {connectError && (
+                <div className="flex items-center gap-2 text-red-400 text-sm mt-2">
+                  <AlertCircle className="w-4 h-4" />
+                  <span>{connectError}</span>
+                </div>
+              )}
             </DialogFooter>
           </DialogContent>
         </Dialog>
 
         {/* Wrong Network Button State */}
-        <div className="flex items-center gap-2">
-          <Button
-            onClick={() => setShowNetworkWarning(true)}
-            variant="outline"
-            className="bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400 hover:bg-red-500/20"
-          >
-            <AlertCircle className="w-4 h-4 mr-2" />
-            Wrong Network
-          </Button>
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => setShowNetworkWarning(true)}
+              variant="outline"
+              className="bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400 hover:bg-red-500/20"
+            >
+              <AlertCircle className="w-4 h-4 mr-2" />
+              Wrong Network
+            </Button>
+            <Button
+              onClick={handleSwitchToFlow}
+              disabled={isSwitching}
+              size="sm"
+              className="bg-orange-500 hover:bg-orange-600 text-white disabled:opacity-50"
+            >
+              {isSwitching ? (
+                <>
+                  <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                  Switching...
+                </>
+              ) : (
+                'Quick Switch'
+              )}
+            </Button>
+          </div>
+          {connectError && (
+            <div className="flex items-center gap-2 text-red-400 text-xs">
+              <AlertCircle className="w-3 h-3" />
+              <span>{connectError}</span>
+            </div>
+          )}
         </div>
       </>
     )
@@ -179,7 +283,7 @@ export default function CustomConnectButton() {
         className="bg-card border-border/40 text-foreground hover:bg-card/80 transition-colors rounded-lg px-3 py-2 h-auto flex items-center gap-2"
       >
         {/* Profile Icon */}
-        <User className="w-5 h-5 p-0.5 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-xs font-semibold text-white" />
+        <User className="w-5 h-5 p-0.5 rounded-full bg-linear-to-br from-primary to-accent flex items-center justify-center text-xs font-semibold text-white" />
 
         {/* Address */}
         <span className="font-mono text-sm font-medium">
