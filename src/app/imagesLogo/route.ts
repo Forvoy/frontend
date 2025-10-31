@@ -5,7 +5,7 @@ import path from 'path';
 export async function GET() {
   try {
     // Path to the logo file
-    const logoPath = path.join(process.cwd(), 'public', 'Assets', 'Logo', 'forter.png');
+    const logoPath = path.join(process.cwd(), 'public', 'Forvoy.png');
 
     // Check if file exists
     if (!fs.existsSync(logoPath)) {

@@ -41,14 +41,14 @@ export default function Header() {
               className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
             >
               <Image
-                src="/forter.webp"
-                alt="FORTER"
+                src="/Forvoy.png"
+                alt="FORVOY"
                 width={32}
                 height={32}
                 className="w-12 h-12 rounded-lg"
               />
               <span className="font-mono text-xl font-bold tracking-wide text-foreground">
-                FORTER
+                FORVOY
               </span>
             </Link>
 

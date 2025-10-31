@@ -51,7 +51,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
               appearance: {
                 theme: 'dark',
                 accentColor: '#676FFF',
-                logo: '/forter.webp',
+                logo: '/Forvoy.png',
                 showWalletLoginFirst: false,
               },
               embeddedWallets: {

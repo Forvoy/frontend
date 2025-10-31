@@ -18,14 +18,14 @@ export default function MobileHeader() {
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
           <Image
-            src="/forter.webp"
-            alt="FORTER"
+            src="/Forvoy.png"
+            alt="FORVOY"
             width={24}
             height={24}
             className="w-8 h-8 rounded-lg"
           />
           <span className="font-mono text-lg font-bold tracking-wide text-foreground">
-            FORTER
+            FORVOY
           </span>
         </Link>
 

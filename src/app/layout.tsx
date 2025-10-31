@@ -23,11 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
       "Stake on credibility, not luck. Build on-chain reputation through verifiable analysis and earn from accurate insights.",
     icons: {
       icon: [
-        { url: "/forter.ico", type: "image/x-icon" },
-        { url: "/forter.png", type: "image/png" },
+        { url: "/Forvoy.png", type: "image/png" },
       ],
-      shortcut: "/forter.ico",
-      apple: "/forter.png",
+      shortcut: "/Forvoy.png",
+      apple: "/Forvoy.png",
     },
     openGraph: {
       title: "Forvoy - Forecast Voyage",
