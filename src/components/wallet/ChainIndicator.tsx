@@ -1,9 +1,12 @@
 'use client';
 
-import { useWallet } from '@/lib/privy/useWallet';
+import { useAccount } from 'wagmi';
+
+const FLOW_TESTNET_CHAIN_ID = 545;
 
 export function ChainIndicator() {
-  const { isConnected, isCorrectNetwork } = useWallet();
+  const { isConnected, chain } = useAccount();
+  const isCorrectNetwork = chain?.id === FLOW_TESTNET_CHAIN_ID;
 
   if (!isConnected) {
     return null;
@@ -25,7 +28,7 @@ export function ChainIndicator() {
           }`} />
           {/* Chain name - hidden on mobile */}
           <span className="hidden md:inline">
-            {isCorrectNetwork ? 'Base Sepolia' : 'Wrong Network'}
+            {isCorrectNetwork ? 'Flow EVM Testnet' : 'Wrong Network'}
           </span>
         </div>
       </div>

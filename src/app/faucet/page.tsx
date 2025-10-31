@@ -1,21 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useWallet } from '@/lib/privy';
 import { Button } from '@/components/ui/button';
 import { Droplet, Loader2 } from 'lucide-react';
 import { parseUnits, formatUnits, type Abi } from 'viem';
-import { useWriteContract, useReadContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useWriteContract, useReadContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
 import MockTokenABI from '@/abis/MockToken.json';
 import FloatingIndicator from '@/components/shared/FloatingIndicator';
 
 const USDC_ADDRESS = process.env.NEXT_PUBLIC_TOKEN_ADDRESS as `0x${string}`;
 const MOCK_TOKEN_ABI = MockTokenABI as Abi;
+const FLOW_TESTNET_CHAIN_ID = 545;
 
 const PRESET_AMOUNTS = [100, 500, 1000, 5000];
 
 export default function FaucetPage() {
-  const { address, isConnected, isCorrectNetwork } = useWallet();
+  const { address, isConnected, chain } = useAccount();
+  const isCorrectNetwork = chain?.id === FLOW_TESTNET_CHAIN_ID;
   const [mintAmount, setMintAmount] = useState('100');
   const [selectedPreset, setSelectedPreset] = useState(100);
   const [showIndicator, setShowIndicator] = useState(false);
@@ -140,7 +141,7 @@ export default function FaucetPage() {
           <div className="bg-card border border-border/40 rounded-xl md:rounded-2xl p-6 md:p-8 text-center">
             <h1 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4">USDC Faucet</h1>
             <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
-              Please switch to Base Sepolia network to use the faucet
+              Please switch to Flow EVM Testnet network to use the faucet
             </p>
           </div>
         </div>
@@ -172,7 +173,7 @@ export default function FaucetPage() {
           {/* Network Section */}
           <div>
             <p className="text-sm text-muted-foreground mb-2">Network</p>
-            <p className="text-3xl font-normal">Base Sepolia</p>
+            <p className="text-3xl font-normal">Flow EVM Testnet</p>
           </div>
         </div>
 
@@ -191,7 +192,7 @@ export default function FaucetPage() {
               {/* Network */}
               <div className="text-right">
                 <p className="text-sm text-muted-foreground mb-2">Network</p>
-                <p className="text-4xl font-medium">Base Sepolia</p>
+                <p className="text-4xl font-medium">Flow EVM Testnet</p>
               </div>
             </div>
           </div>
@@ -272,7 +273,7 @@ export default function FaucetPage() {
         {/* Note */}
         <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
           <p className="text-sm text-blue-600 dark:text-blue-400">
-            <span className="font-semibold">Note:</span> This is testnet USDC for Base Sepolia only. These tokens have no real value and are meant for testing purposes.
+            <span className="font-semibold">Note:</span> This is testnet USDC for Flow EVM Testnet only. These tokens have no real value and are meant for testing purposes.
           </p>
         </div>
         </div>

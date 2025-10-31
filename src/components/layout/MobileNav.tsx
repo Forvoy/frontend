@@ -3,11 +3,11 @@
 import { Home, TrendingUp, User, NotebookTextIcon, Droplet } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useWallet } from '@/lib/privy'
+import { useAccount } from 'wagmi'
 
 export default function MobileNav() {
   const pathname = usePathname()
-  const { address, isConnected } = useWallet()
+  const { address, isConnected } = useAccount()
 
   const navItems = [
     {
