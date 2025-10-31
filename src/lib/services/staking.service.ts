@@ -85,7 +85,7 @@ class StakingService {
    *
    * Contract Integration:
    * - Function: getUserStakeHistory(user) + filter by poolId
-   * - Used to display "Supporters" and "Opponents" on pool detail page
+   * - Used to display "Yes voters" and "No voters" on pool detail page
    * - Gets real-time data from contract, no mock fallback
    */
   async getByPoolId(poolId: string, userAddress?: string): Promise<PoolStake[]> {

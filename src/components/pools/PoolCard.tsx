@@ -116,7 +116,7 @@ export default function PoolCard({ pool, onStakeSuccess }: PoolCardProps) {
             hash: stake.id // In contract mode, this would be tx hash
           };
         },
-        `Staking ${amount} USDC on ${selectedPosition === 'agree' ? 'Support' : 'Oppose'}...`,
+        `Staking ${amount} USDC on ${selectedPosition === 'agree' ? 'Yes' : 'No'}...`,
         `Successfully staked ${amount} USDC!`,
         selectedPosition === 'agree' ? 'primary' : 'accent'
       );
@@ -311,10 +311,10 @@ export default function PoolCard({ pool, onStakeSuccess }: PoolCardProps) {
             <div className="flex justify-between text-xs">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-emerald-700 font-medium">{agreePercentage}% Support</span>
+                <span className="text-emerald-700 font-medium">{agreePercentage}% Yes</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="text-rose-700 font-medium">{disagreePercentage}% Oppose</span>
+                <span className="text-rose-700 font-medium">{disagreePercentage}% No</span>
                 <div className="w-2 h-2 rounded-full bg-rose-500"></div>
               </div>
             </div>
@@ -361,7 +361,7 @@ export default function PoolCard({ pool, onStakeSuccess }: PoolCardProps) {
                   </div>
                 ) : (
                   <div className="text-xs text-red-600 text-center">
-                    Creator was wrong - All staker rewards distributed to Oppose side
+                    Creator was wrong - All staker rewards distributed to No side
                     {pool.rewardTxHash && (
                       <a
                         href={`https://sepolia.basescan.org/tx/${pool.rewardTxHash}`}
@@ -390,13 +390,13 @@ export default function PoolCard({ pool, onStakeSuccess }: PoolCardProps) {
               onClick={() => handleStakeButtonClick('agree')}
               className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold"
             >
-              Support
+              Yes
             </Button>
             <Button
               onClick={() => handleStakeButtonClick('disagree')}
               className="flex-1 bg-rose-500 hover:bg-rose-600 text-white border-rose-500 font-semibold"
             >
-              Oppose
+              No
             </Button>
           </div>
         ) : (
@@ -405,7 +405,7 @@ export default function PoolCard({ pool, onStakeSuccess }: PoolCardProps) {
             <div className="flex items-center justify-between">
               <span className="text-sm font-semibold">
                 <span className={selectedPosition === 'agree' ? 'text-emerald-600' : 'text-rose-600'}>
-                  {selectedPosition === 'agree' ? 'Support' : 'Oppose'}
+                  {selectedPosition === 'agree' ? 'Yes' : 'No'}
                 </span>
               </span>
               <button

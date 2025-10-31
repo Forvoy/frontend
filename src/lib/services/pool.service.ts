@@ -134,7 +134,7 @@ class PoolService {
             id: '0-0',
             newsId: '0',
             creatorAddress: '0x580B01f8CDf7606723c3BE0dD2AaD058F5aECa3d',
-            reasoning: 'This is a test pool for validating the fixed staking system with proper position mapping logic. Pool position is YES, so Support stakes should go to agreeStakes and Oppose stakes should go to disagreeStakes.',
+            reasoning: 'This is a test pool for validating the fixed staking system with proper position mapping logic. Pool position is YES, so Yes stakes should go to agreeStakes and No stakes should go to disagreeStakes.',
             evidence: ['https://example.com/evidence1', 'https://example.com/evidence2'],
             imageUrl: 'https://example.com/image.jpg',
             imageCaption: 'Test pool image caption',
