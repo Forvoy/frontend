@@ -50,7 +50,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
               loginMethods: ['email', 'wallet'],
               appearance: {
                 theme: 'dark',
-                accentColor: '#676FFF',
+                accentColor: '#60a5fa',
                 logo: '/Forvoy.png',
                 showWalletLoginFirst: false,
               },
