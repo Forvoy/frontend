@@ -12,7 +12,7 @@ lib/contracts/
 ├── utils.shared.ts             # Shared utilities (parseUSDC, formatUSDC, etc.)
 ├── types.shared.ts             # Shared TypeScript types
 │
-├── Forter/
+├── Forter/                     # Forvoy main contract
 │   ├── index.ts               # Re-exports read + write + mappers
 │   ├── read.ts                # Read-only contract calls
 │   ├── write.ts               # Transaction/write calls
@@ -67,7 +67,7 @@ import { getNewsById } from '@/lib/contracts/Forter/read';
 
 ## 📚 Available Functions by Contract
 
-### 🗞️ **Forter Contract** (News & Pools)
+### 🗞️ **Forvoy Contract** (News & Pools)
 
 **Read Operations:**
 ```typescript

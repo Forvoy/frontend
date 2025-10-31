@@ -18,7 +18,7 @@ export default function Hero() {
         <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-background/80 backdrop-blur-md px-4 py-2 text-sm font-medium shadow-lg shadow-primary/10">
           <span className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
           <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Forecast Porter
+            Forecast Voyage
           </span>
         </div>
 
@@ -32,7 +32,7 @@ export default function Hero() {
         </h1>
 
         <p className="text-pretty mt-6 md:mt-8 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-          Forter is the{" "}
+          Forvoy is the{" "}
           <span className="font-semibold text-foreground">
             Information Finance Protocol
           </span>

@@ -45,7 +45,7 @@ export default function HowItWorks() {
     <div className="max-w-7xl mx-auto px-4 py-12">
       {/* Header */}
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">How Forter Works</h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">How Forvoy Works</h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
           From connecting your wallet to building permanent on-chain reputation — the complete Information Finance
           journey.

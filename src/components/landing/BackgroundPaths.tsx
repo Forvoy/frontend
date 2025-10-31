@@ -49,7 +49,7 @@ function FloatingPaths({ position }: { position: number }) {
 export default function BackgroundPaths({
   title = "Stake on Credibility",
   subtitle = "not luck.",
-  description = "Forter is the Information Finance Protocol. Back outcomes and the analysts who forecast them.",
+  description = "Forvoy is the Information Finance Protocol. Back outcomes and the analysts who forecast them.",
 }: {
   title?: string
   subtitle?: string
@@ -94,7 +94,7 @@ export default function BackgroundPaths({
         >
           <span className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
           <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-semibold">
-            Forecast Porter
+            Forecast Voyage
           </span>
         </motion.div>
 

@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Forter - Forecast Porter",
+    title: "Forvoy - Forecast Voyage",
     description:
       "Stake on credibility, not luck. Build on-chain reputation through verifiable analysis and earn from accurate insights.",
     icons: {
@@ -30,19 +30,19 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: "/forter.png",
     },
     openGraph: {
-      title: "Forter - Forecast Porter",
+      title: "Forvoy - Forecast Voyage",
       description:
-        "Permissionless information finance protocol. Create predictions, analyze with reasoning, and build on-chain reputation.",
+        "Information finance protocol. Create predictions, analyze with reasoning, and build on-chain reputation.",
       images: [
         {
           url: "https://forter.app/og-image.png",
           width: 1200,
           height: 630,
-          alt: "Forter - Forecast Porter",
+          alt: "Forvoy - Forecast Voyage",
         },
       ],
       type: "website",
-      siteName: "Forter",
+      siteName: "Forvoy",
     },
   };
 }
