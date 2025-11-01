@@ -6,9 +6,16 @@ import { Button } from '@/components/ui/button';
 import { Loader2, X } from 'lucide-react';
 import Image from 'next/image';
 
+interface MoonPayTransactionData {
+  status: string;
+  transactionId?: string;
+  amount?: number;
+  currency?: string;
+}
+
 interface MoonPayWidgetProps {
   onClose?: () => void;
-  onSuccess?: (transactionData: any) => void;
+  onSuccess?: (transactionData: MoonPayTransactionData) => void;
 }
 
 export function MoonPayWidget({ onClose, onSuccess }: MoonPayWidgetProps) {
